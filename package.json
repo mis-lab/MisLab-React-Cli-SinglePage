@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "基于 Webpack 的 React 单页脚手架工具",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/Reaper622/react-cli-singlepage.git"
@@ -16,5 +14,11 @@
   "bugs": {
     "url": "https://gitlab.com/Reaper622/react-cli-singlepage/issues"
   },
-  "homepage": "https://gitlab.com/Reaper622/react-cli-singlepage#README"
+  "homepage": "https://gitlab.com/Reaper622/react-cli-singlepage#README",
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "webpack": "^4.32.0",
+    "webpack-dev-server": "^3.4.1"
+  }
 }
