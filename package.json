@@ -4,7 +4,8 @@
   "description": "基于 Webpack 的 React 单页脚手架工具",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config ./config/webpack.common.js"
+    "build": "webpack --env.production --config ./config/webpack.common.js",
+    "dev": "webpack-dev-server --config ./config/webpack.common.js"
   },
   "repository": {
     "type": "git",

@@ -2,10 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpack = require('webpack')
+const merge = require('webpack-merge')
+const prodConfig = require('./webpack.prod.js')
+const devConfig = require('./webpack.dev.js')
 
-module.exports = {
-  mode: 'development',
-  devtool: 'cheap-module-eval-source-map',
+const commonConfig = {
   entry: {
     main: './src/index.js'
   },
@@ -14,8 +15,8 @@ module.exports = {
     mainFiles: ['index'],
     // 别名 可以用来定义快捷路径
     alias: {
-      'components' : path.resolve(__dirname, '../src/components'),
-      'assets' : path.resolve(__dirname, '../src/assets')
+      '@components' : path.resolve(__dirname, '../src/components'),
+      '@assets' : path.resolve(__dirname, '../src/assets')
     }
   },
   module: {
@@ -51,9 +52,15 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin()
   ],
   output: {
-    publicPath: './',
-    filename: '[name]-[hash:8].js',
     path: path.resolve(__dirname, '../dist')
   }
 }
 
+// env为外部传入的全局变量
+module.exports = (env) => {
+  if(env && env.production) {
+    return merge(commonConfig, prodConfig);
+  } else {
+    return merge(commonConfig, devConfig);
+  }
+}
