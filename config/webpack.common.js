@@ -1,10 +1,10 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const prodConfig = require('./webpack.prod.js')
-const devConfig = require('./webpack.dev.js')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const prodConfig = require('./webpack.prod.js');
+const devConfig = require('./webpack.dev.js');
 
 const commonConfig = {
   entry: {
@@ -12,7 +12,7 @@ const commonConfig = {
   },
   resolve: {
     // 第三方模块只搜索 node_modules 
-    modules: [path.resolve(__dirname, 'node_modules')],
+    modules: [path.resolve(__dirname, '../node_modules')],
     extensions: ['.js', 'jsx'],
     mainFiles: ['index'],
     // 别名 可以用来定义快捷路径
