@@ -1,16 +1,18 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const prodConfig = require('./webpack.prod.js')
-const devConfig = require('./webpack.dev.js')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const prodConfig = require('./webpack.prod.js');
+const devConfig = require('./webpack.dev.js');
 
 const commonConfig = {
   entry: {
     main: './src/index.js'
   },
   resolve: {
+    // 第三方模块只搜索 node_modules 
+    modules: [path.resolve(__dirname, '../node_modules')],
     extensions: ['.js', 'jsx'],
     mainFiles: ['index'],
     // 别名 可以用来定义快捷路径
@@ -36,7 +38,15 @@ const commonConfig = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: ['file-loader']
+        use: [{
+          loader: 'url-loader',
+          options: {
+            // 30KB 以下大小的图片文件用base64编码来减少请求次数
+            limit: 1024-30,
+            // 超出 30KB 的图片仍用 file-loader压缩
+            fallback: 'file-loader'
+          }
+        }]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
