@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const prodConfig = require('./webpack.prod.js');
 const devConfig = require('./webpack.dev.js');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const commonConfig = {
   entry: {
@@ -34,7 +35,7 @@ const commonConfig = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -55,6 +56,9 @@ const commonConfig = {
     ]
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name]-[contenthash].css'
+    }),
     new HtmlWebpackPlugin({
       template: 'public/index.html'
     }),
