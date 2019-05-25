@@ -6,6 +6,9 @@ const merge = require('webpack-merge');
 const prodConfig = require('./webpack.prod.js');
 const devConfig = require('./webpack.dev.js');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HappyPack = require('happypack');
+// 使用共享进行池处理任务 防止资源占用过多
+const happyThreadPool = HappyPack.ThreadPool({ size: 5});
 
 const commonConfig = {
   entry: {
@@ -27,15 +30,12 @@ const commonConfig = {
       {
         test: /(\.js| \.jsx)$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-          }
-        ]
+        // 使用 happypack 多线程打包
+        use: ['happypack/loader?id=babel']
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader']
+        use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=css']
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -56,6 +56,17 @@ const commonConfig = {
     ]
   },
   plugins: [
+    new HappyPack({
+      // 唯一标识符 id 来表示当前 HappyPack 处理哪种文件 
+      id: 'babel',
+      loaders: ['babel-loader'],
+      threadPool: happyThreadPool
+    }),
+    new HappyPack({
+      id: 'css',
+      loaders: ['css-loader', 'postcss-loader'],
+      threadPool: happyThreadPool
+    }),
     new MiniCssExtractPlugin({
       filename: '[name]-[contenthash].css'
     }),
