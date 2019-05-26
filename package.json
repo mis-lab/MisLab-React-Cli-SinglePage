@@ -4,7 +4,7 @@
   "description": "基于 Webpack 的 React 单页脚手架工具",
   "main": "index.js",
   "scripts": {
-    "build": "npm run dll && npm run build:nodll",
+    "build": "npm run dll && npm run build:no-dll",
     "dll": "webpack --config ./config/webpack.dll.config.js",
     "dev": "webpack-dev-server --config ./config/webpack.common.js",
     "build:no-dll": "webpack --env.production --config ./config/webpack.common.js"
@@ -45,6 +45,7 @@
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "webpack-cli": "^3.3.2",
-    "webpack-merge": "^4.2.1"
+    "webpack-merge": "^4.2.1",
+    "webpack-parallel-uglify-plugin": "^1.1.0"
   }
 }
