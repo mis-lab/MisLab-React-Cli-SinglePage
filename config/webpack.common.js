@@ -38,6 +38,10 @@ const commonConfig = {
         use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=css']
       },
       {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=scss']
+      },
+      {
         test: /\.(png|svg|jpg|gif)$/,
         use: [{
           loader: 'url-loader',
@@ -65,6 +69,11 @@ const commonConfig = {
     new HappyPack({
       id: 'css',
       loaders: ['css-loader', 'postcss-loader'],
+      threadPool: happyThreadPool
+    }),
+    new HappyPack({
+      id: 'scss',
+      loaders: ['css-loader', 'postcss-loader', 'sass-loader'],
       threadPool: happyThreadPool
     }),
     new MiniCssExtractPlugin({
