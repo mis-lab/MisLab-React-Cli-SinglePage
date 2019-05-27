@@ -1,6 +1,7 @@
 # react-cli-singlepage
+![license](https://img.shields.io/badge/license-MIT-blue.svg) ![webpack](https://img.shields.io/badge/webpack-4.32.0-orange.svg) ![eslint](https://img.shields.io/badge/Eslint-standard-lightgrey.svg)
 
-基于 Webpack 的 React 单页脚手架工具
+> 基于 Webpack 的 React 单页脚手架工具
 
 #### 项目目录
 ```
@@ -61,3 +62,6 @@ npm run dev
 npm run build:no-dll
 ```
 
+## License
+    
+MIT License Copyright (c) 2019 [MIS Lab](https://github.com/mis-lab)
