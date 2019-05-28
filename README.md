@@ -18,6 +18,7 @@ my-app
 └── src  项目源码
     ├── assets 存放资源
     ├── components 存放公共组件
+    ├── utils 存放公用函数方法
     └── pages 存放页面级组件
 ```
 
