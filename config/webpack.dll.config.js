@@ -5,7 +5,7 @@ module.exports = {
   mode: 'production',
   entry: {
     // 动态链接库的入口
-    react: ['react', 'react-dom'],
+    react: ['react', 'react-dom']
   },
   output: {
     // 输出动态链接库的名称
@@ -22,4 +22,4 @@ module.exports = {
       path: path.resolve(__dirname, '../dll/[name].manifest.json')
     })
   ]
-}
+};
