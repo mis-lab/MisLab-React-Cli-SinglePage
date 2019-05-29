@@ -1,7 +1,7 @@
 const path = require('path');
 const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
-const DefinePlugin = require('webpack/lib/DefinePlugin');
+// const DefinePlugin = require('webpack/lib/DefinePlugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
 const prodConfig = {
@@ -43,6 +43,6 @@ const prodConfig = {
       }
     })
   ]
-}
+};
 
 module.exports = prodConfig;

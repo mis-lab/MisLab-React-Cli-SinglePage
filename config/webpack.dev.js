@@ -24,6 +24,6 @@ const devConfig = {
     filename: '[name].js',
     chunkFilename: '[name].js'
   }
-}
+};
 
-module.exports = devConfig
+module.exports = devConfig;
