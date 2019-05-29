@@ -3,15 +3,21 @@ const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 // const DefinePlugin = require('webpack/lib/DefinePlugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 
 const prodConfig = {
   mode: 'production',
   devtool: 'cheap-module-source-map',
+  resolve: {
+    // 针对npm中的第三方模块优先用jsnext:main指向ES6模块化语法的的文件
+    mainFields: ['jsnext:main', 'browser', 'main']
+  },
   output: {
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js'
   },
   plugins: [
+    new ModuleConcatenationPlugin(),
     new DllReferencePlugin({
       // react 动态链接库文件内容
       manifest: require('../dll/react.manifest.json')
