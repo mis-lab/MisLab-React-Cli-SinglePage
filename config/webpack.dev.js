@@ -13,9 +13,36 @@ const devConfig = {
     // 开始模块热更替
     hot: true,
     // 及时HMR不生效，也不让浏览器自动刷新
-    hotOnly: true,
+    // hotOnly: true,
     // 配置代理
     proxy: {}
+  },
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              // scss文件中@import的scss文件也要经过前两个loader
+              importLoaders: 2
+            }
+          },
+          'sass-loader',
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'postcss-loader'
+        ]
+      }
+    ]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin()

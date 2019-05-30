@@ -4,6 +4,8 @@ const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 // const DefinePlugin = require('webpack/lib/DefinePlugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const prodConfig = {
   mode: 'production',
@@ -12,12 +14,27 @@ const prodConfig = {
     // 针对npm中的第三方模块优先用jsnext:main指向ES6模块化语法的的文件
     mainFields: ['jsnext:main', 'browser', 'main']
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=css']
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=scss']
+      }
+    ]
+  },
   output: {
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js'
   },
   plugins: [
     new ModuleConcatenationPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name]-[contenthash].css'
+    }),
     new DllReferencePlugin({
       // react 动态链接库文件内容
       manifest: require('../dll/react.manifest.json')
@@ -47,7 +64,8 @@ const prodConfig = {
           reduce_vars: true
         }
       }
-    })
+    }),
+    new CleanWebpackPlugin()
   ]
 };
 
