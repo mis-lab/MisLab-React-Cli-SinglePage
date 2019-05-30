@@ -1,11 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const webpack = require('webpack');
 const merge = require('webpack-merge');
 const prodConfig = require('./webpack.prod.js');
 const devConfig = require('./webpack.dev.js');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HappyPack = require('happypack');
 // 使用共享进行池处理任务 防止资源占用过多
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
@@ -34,14 +31,6 @@ const commonConfig = {
         use: ['happypack/loader?id=babel']
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=css']
-      },
-      {
-        test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=scss']
-      },
-      {
         test: /\.(png|svg|jpg|gif)$/,
         use: [{
           loader: 'url-loader',
@@ -68,22 +57,27 @@ const commonConfig = {
     }),
     new HappyPack({
       id: 'css',
-      loaders: ['css-loader', 'postcss-loader'],
+      loaders: ['style-loader', 'css-loader', 'postcss-loader'],
       threadPool: happyThreadPool
     }),
     new HappyPack({
       id: 'scss',
-      loaders: ['css-loader', 'postcss-loader', 'sass-loader'],
+      loaders: [
+        {
+          loader: 'css-loader',
+          options: {
+            // scss 文件中@import的css文件也要走前两个loader
+            importLoaders: 2
+          }
+        },
+        'postcss-loader',
+        'sass-loader'
+      ],
       threadPool: happyThreadPool
-    }),
-    new MiniCssExtractPlugin({
-      filename: '[name]-[contenthash].css'
     }),
     new HtmlWebpackPlugin({
       template: 'public/index.html'
-    }),
-    new CleanWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    })
   ],
   output: {
     path: path.resolve(__dirname, '../dist')
