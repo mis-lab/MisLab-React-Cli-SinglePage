@@ -6,6 +6,7 @@ const devConfig = require('./webpack.dev.js');
 const HappyPack = require('happypack');
 // 使用共享进行池处理任务 防止资源占用过多
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const commonConfig = {
   entry: {
@@ -77,7 +78,17 @@ const commonConfig = {
     }),
     new HtmlWebpackPlugin({
       template: 'public/index.html'
-    })
+    }),
+    // 拷贝的静态资源不做打包处理
+    new CopyWebpackPlugin([{
+      // 定义拷贝的源目录
+      from: path.resolve(__dirname, '../static'),
+      // 定义拷贝的目标目录
+      to: path.resolve(__dirname, '../dist/static'),
+      // 忽略拷贝指定的文件
+      ignore: ['.*']
+
+    }])
   ],
   output: {
     path: path.resolve(__dirname, '../dist')
