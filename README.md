@@ -15,6 +15,7 @@ my-app
 ├── .gitignore 
 ├── public 公共资源文件
 ├── config 配置文件
+├── static 静态资源
 └── src  项目源码
     ├── assets 存放资源
     ├── components 存放公共组件
