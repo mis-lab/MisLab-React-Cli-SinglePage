@@ -66,7 +66,43 @@ const prodConfig = {
       }
     }),
     new CleanWebpackPlugin()
-  ]
+  ],
+  optimization: {
+    // 代码分割
+    splitChunks: {
+      // 对入口文件与异步导入文件都进行处理
+      chunks: 'all',
+      // 最小尺寸必须大于此值，否则不执行代码分割,单位为字节
+      minSize: 30000,
+      // 其他入口文件引用次数达到1再进行代码分割
+      minChunks: 1,
+      // 入口文件请求的chunks不超过3个
+      maxInitialRequests: 3,
+      // 同时最多加载五个请求，异步请求的chunks不超过5个
+      maxAsyncRequests: 5,
+      // 文件中间生成的连接符
+      automaticNameDelimiter: '~',
+      // 文件生成名,基于 chunks 和 cache group 来生成
+      name: true,
+      cacheGroups: {
+        // node_modules 内的依赖库
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          // 优先级 多个分组冲突时根据优先级决定代码属于那一块
+          priority: -10,
+          name: 'vendors'
+        },
+        // utils 工具库
+        utils: {
+          test: /[\\/]src[\\/]utils[\\/]/,
+          priority: -20,
+          // 复用之前已经打包过的，不在重新打包已经打包过的模块
+          reuseExistingChunk: true,
+          name: 'utils'
+        }
+      }
+    }
+  }
 };
 
 module.exports = prodConfig;
