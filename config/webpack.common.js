@@ -15,7 +15,7 @@ const commonConfig = {
   resolve: {
     // 第三方模块只搜索 node_modules
     modules: [path.resolve(__dirname, '../node_modules')],
-    extensions: ['.js', 'jsx'],
+    extensions: ['.js', '.jsx'],
     mainFiles: ['index'],
     // 别名 可以用来定义快捷路径
     alias: {
