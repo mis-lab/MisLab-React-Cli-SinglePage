@@ -7,6 +7,7 @@ const HappyPack = require('happypack');
 // 使用共享进行池处理任务 防止资源占用过多
 const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+ 
 
 const commonConfig = {
   entry: {
@@ -33,15 +34,26 @@ const commonConfig = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [{
+        use: [
+          {
           loader: 'url-loader',
           options: {
             // 30KB 以下大小的图片文件用base64编码来减少请求次数
-            limit: 1024 - 30,
+            limit: 1024 * 30,
             // 超出 30KB 的图片仍用 file-loader压缩
             fallback: 'file-loader'
           }
-        }]
+        },
+        {
+          loader: 'file-loader'
+        },
+        {
+          loader: 'image-webpack-loader',
+          options: {
+            disable: true,
+          }
+        }
+      ]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
