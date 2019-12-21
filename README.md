@@ -2,6 +2,13 @@
 ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![webpack](https://img.shields.io/badge/webpack-4.32.0-orange.svg) ![eslint](https://img.shields.io/badge/Eslint-standard-lightgrey.svg)
 
 > 基于 Webpack 的 React 单页脚手架工具
+### 功能特点
+- CSS文件单独打包
+- DllPlugin 使用动态链接库引入React。
+- HappyPack 多线程打包，提升打包速度。
+- 支持Sass。
+- 支持对React的热模块更替。
+- 对图片的压缩优化。
 
 #### 项目目录
 ```
